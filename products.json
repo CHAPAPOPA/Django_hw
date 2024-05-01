@@ -1,0 +1,78 @@
+[
+  {
+    "model": "catalog.category",
+    "pk": 1,
+    "fields": {
+      "name": "Молочная продукция",
+      "description": "Пищевой продукт, произведенный из молока или молочных продуктов."
+    }
+  },
+  {
+    "model": "catalog.category",
+    "pk": 2,
+    "fields": {
+      "name": "Мясо",
+      "description": "Скелетная поперечно-полосатая мускулатура животного с прилегающими к ней жировой и соединительной тканями"
+    }
+  },
+  {
+    "model": "catalog.category",
+    "pk": 3,
+    "fields": {
+      "name": "Шоколад",
+      "description": "Кондитерское изделие на основе масла какао"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 1,
+    "fields": {
+      "name": "Куриное филе",
+      "description": "Белое мясо куриной грудки, очищенное от кожи, хрящей и костей",
+      "image": "product/image/100029482768b0.webp",
+      "category": 2,
+      "purchase_price": 350,
+      "created_at": "2024-05-01",
+      "updated_at": null
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 2,
+    "fields": {
+      "name": "Шоколад Milka",
+      "description": "Молочный шоколад Milka с добавлением альпийского молока буквально тает во рту и способен раскрыть нежность в каждом, кто его попробует. Вкуснее, когда нежнее!",
+      "image": "product/image/P1024074.jpg",
+      "category": 3,
+      "purchase_price": 89,
+      "created_at": "2024-05-01",
+      "updated_at": null
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 3,
+    "fields": {
+      "name": "Молоко пискаревское",
+      "description": "Молоко Пискарёвское - вкусный и полезный продукт на каждый день.",
+      "image": "product/image/4602547001319-1-768x768.png",
+      "category": 1,
+      "purchase_price": 67,
+      "created_at": "2024-05-01",
+      "updated_at": null
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 4,
+    "fields": {
+      "name": "Жевательная резинка Five",
+      "description": "",
+      "image": "",
+      "category": null,
+      "purchase_price": null,
+      "created_at": null,
+      "updated_at": null
+    }
+  }
+]
