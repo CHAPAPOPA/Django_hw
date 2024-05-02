@@ -20,11 +20,9 @@ class Command(BaseCommand):
         products_data = Command.json_read(Command.file_path, "product")
         categories_data = Command.json_read(Command.file_path, "category")
 
-        # Очищаем таблицы перед добавлением новых данных
         Product.objects.all().delete()
         Category.objects.all().delete()
 
-        # Создаем категории
         categories_to_create = [
             Category(
                 pk=category["pk"],
@@ -35,7 +33,6 @@ class Command(BaseCommand):
         ]
         Category.objects.bulk_create(categories_to_create)
 
-        # Создаем продукты
         products_to_create = [
             Product(
                 name=product["fields"]["name"],
