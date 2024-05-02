@@ -24,16 +24,11 @@
     }
   },
   {
-    "model": "catalog.product",
-    "pk": 1,
+    "model": "catalog.category",
+    "pk": 5,
     "fields": {
-      "name": "Куриное филе",
-      "description": "Белое мясо куриной грудки, очищенное от кожи, хрящей и костей",
-      "image": "product/image/100029482768b0.webp",
-      "category": 2,
-      "purchase_price": 350,
-      "created_at": "2024-05-01",
-      "updated_at": null
+      "name": "Крупы",
+      "description": "Пищевой продукт, состоящий из цельных или дроблёных зёрен различных культур"
     }
   },
   {
@@ -72,6 +67,32 @@
       "category": null,
       "purchase_price": null,
       "created_at": null,
+      "updated_at": null
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 7,
+    "fields": {
+      "name": "Гречневая крупа",
+      "description": "Зерновой продукт, получаемый из семян растения гречихи",
+      "image": "",
+      "category": 5,
+      "purchase_price": 76,
+      "created_at": null,
+      "updated_at": null
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 8,
+    "fields": {
+      "name": "Куриное филе",
+      "description": "",
+      "image": "",
+      "category": 2,
+      "purchase_price": 350,
+      "created_at": "2024-05-02",
       "updated_at": null
     }
   }
