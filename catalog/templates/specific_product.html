@@ -11,7 +11,7 @@
                         <div class="card-body">
                             <p class="card-text">Название: {{ product.name }}</p>
                             <p class="card-text">Категория: {{ product.category }}</p>
-                            <p class="card-text">Описанрпи: {{ product.description }}</p>
+                            <p class="card-text">Описанрпи: {{ product.description | truncatechars:100 }}</p>
                             <a class="btn btn-primary" href="{% url 'catalog:products' %}" role="button">Назад</a>
                                 <small class="text-body-secondary">9 mins</small>
                             </div>
