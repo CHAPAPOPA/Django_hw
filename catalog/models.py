@@ -32,6 +32,11 @@ class Product(models.Model):
     updated_at = models.DateField(
         blank=True, null=True, verbose_name="дата последнего изменения"
     )
+    views_counter = models.PositiveIntegerField(
+        default=0,
+        verbose_name="количество просмотров",
+        help_text="Укажите количество просмотров",
+    )
 
     def __str__(self):
         return f"{self.name} {self.category}"

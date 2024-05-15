@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'catalog/base.html' %}
 {% load my_tags %}
 {% block content %}
 <div class="album py-5 bg-body-tertiary">
@@ -9,9 +9,10 @@
                     <div class="card shadow-sm">
                         <img src="{{ product.image | media_filter }}">
                         <div class="card-body">
-                            <p class="card-text">Название: {{ product.name }}</p>
-                            <p class="card-text">Категория: {{ product.category }}</p>
-                            <p class="card-text">Описанрпи: {{ product.description | truncatechars:100 }}</p>
+                            <p class="card-text">Название: {{ object.name }}</p>
+                            <p class="card-text">Категория: {{ object.category }}</p>
+                            <p class="card-text">Описание: {{ object.description | truncatechars:100 }}</p>
+                            <p class="card-text">Цена: {{ object.purchase_price}}</p>
                             <a class="btn btn-primary" href="{% url 'catalog:products' %}" role="button">Назад</a>
                                 <small class="text-body-secondary">9 mins</small>
                             </div>

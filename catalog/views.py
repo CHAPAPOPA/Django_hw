@@ -1,16 +1,21 @@
-from django.shortcuts import render, get_object_or_404
+from django.http import HttpResponseRedirect
 
 import csv
+
+from django.urls import reverse_lazy
+from django.views.generic import ListView, DetailView, TemplateView, CreateView, UpdateView, DeleteView
 
 from catalog.models import Product
 
 
-def home_page(request):
-    return render(request, 'home_page.html')
+class HomePageView(TemplateView):
+    template_name = 'catalog/home_page.html'
 
 
-def contact_information(request):
-    if request.method == 'POST':
+class ContactInformationView(TemplateView):
+    template_name = 'catalog/contact_information.html'
+
+    def post(self, request, *args, **kwargs):
         name = request.POST.get('name', '')
         phone = request.POST.get('phone', '')
         message = request.POST.get('message', '')
@@ -19,16 +24,38 @@ def contact_information(request):
             writer = csv.writer(file)
             writer.writerow([name, phone, message])
 
-    return render(request, 'contact_information.html')
+        return HttpResponseRedirect(self.request.path)
 
 
-def products_list(request):
-    products = Product.objects.all()
-    context = {"products": products}
-    return render(request, 'products_list.html', context)
+class ProductListView(ListView):
+    model = Product
 
 
-def specific_product(request, pk):
-    product = get_object_or_404(Product, pk=pk)
-    context = {"product": product}
-    return render(request, 'specific_product.html', context)
+class ProductDetailView(DetailView):
+    model = Product
+
+    def get_object(self, queryset=None):
+        self.object = super().get_object(queryset)
+        self.object.views_counter += 1
+        self.object.save()
+        return self.object
+
+
+class ProductCreateView(CreateView):
+    model = Product
+    fields = ('name', 'description', 'purchase_price', 'image')
+    success_url = reverse_lazy('catalog:products')
+
+
+class ProductUpdateView(UpdateView):
+    model = Product
+    fields = ('name', 'description', 'purchase_price', 'image')
+    success_url = reverse_lazy('catalog:products')
+
+    def get_success_url(self):
+        return reverse_lazy('catalog:specific_product', args=[self.kwargs['pk']])
+
+
+class ProductDeleteView(DeleteView):
+    model = Product
+    success_url = reverse_lazy('catalog:products')
