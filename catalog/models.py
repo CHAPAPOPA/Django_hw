@@ -37,6 +37,8 @@ class Product(models.Model):
         verbose_name="количество просмотров",
         help_text="Укажите количество просмотров",
     )
+    is_published = models.BooleanField(default=True, verbose_name="опубликован")
+    slug = models.CharField(max_length=150, verbose_name="slug", null=True, blank=True)
 
     def __str__(self):
         return f"{self.name} {self.category}"
