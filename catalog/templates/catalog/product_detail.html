@@ -6,7 +6,9 @@
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
             <div class="col">
                 <div class="card shadow-sm">
+                    {% if product.image %}
                     <img src="{{ product.image | media_filter }}" class="card-img-top" alt="{{ product.name }}">
+                    {% endif %}
                     <div class="card-body">
                         <h5 class="card-title">{{ product.name }} ({{ product.slug }})</h5>
                         <p class="card-text"><strong>Категория:</strong> {{ product.category }}</p>
