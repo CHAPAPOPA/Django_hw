@@ -42,8 +42,8 @@ class VersionForm(StyleFormMixin, ModelForm):
         fields = ['product', 'number', 'name', 'is_active']
 
     def clean_is_active(self):
-        active_version = Version.objects.filter(current_version=True).filter(product=self.cleaned_data.get('product'))
         is_active = self.cleaned_data["is_active"]
+        active_version = Version.objects.filter(is_active=True)
         if active_version and is_active:
             raise ValidationError(
                 'Может быть указана только одна активная версия.'
