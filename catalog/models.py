@@ -35,7 +35,7 @@ class Product(models.Model):
     views_counter = models.PositiveIntegerField(
         default=0,
         verbose_name="количество просмотров",
-        help_text="Укажите количество просмотров",
+        help_text="укажите количество просмотров",
     )
     is_published = models.BooleanField(default=True, verbose_name="опубликован")
     slug = models.CharField(max_length=150, verbose_name="slug", null=True, blank=True)
@@ -47,3 +47,38 @@ class Product(models.Model):
         verbose_name = "Продукт"
         verbose_name_plural = "Продукты"
         ordering = ["name", "category", "purchase_price"]
+
+
+class Version(models.Model):
+    product = models.ForeignKey(
+        Product,
+        related_name="version",
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
+        verbose_name="продукт",
+        help_text="введите версию продукта",
+    )
+    number = models.PositiveIntegerField(
+        verbose_name="Номер версии", help_text="Введите номер версии"
+    )
+    name = models.CharField(
+        max_length=50,
+        verbose_name="Название версии",
+        help_text="Введите название версии",
+    )
+    is_active = models.BooleanField(
+        verbose_name="Активная версия?",
+        help_text="Отметьте активность версии",
+        default=False,
+    )
+    slug = models.SlugField(
+        max_length=100, verbose_name="slug", unique=True, db_index=True
+    )
+
+    def __str__(self):
+        return f"{self.product}. Версия №{self.number}"
+
+    class Meta:
+        verbose_name = "Версия"
+        verbose_name_plural = "Версии"

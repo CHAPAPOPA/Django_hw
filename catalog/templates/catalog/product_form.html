@@ -1,22 +1,20 @@
 {% extends 'catalog/base.html' %}
 {% block content %}
 <div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-6">
-            <div class="card">
-                <div class="card-header">
-                    {% if object %}
-                        <h5 class="card-title">Редактировать продукт</h5>
-                    {% else %}
-                        <h5 class="card-title">Создать новый продукт</h5>
-                    {% endif %}
-                </div>
-                <div class="card-body">
-                    <form method="post" enctype="multipart/form-data">
-                        <div class="mb-3">
-                            {% csrf_token %}
-                            {{ form.as_p }}
-                        </div>
+    <form method="post" enctype="multipart/form-data">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        {% if object %}
+                            <h5 class="card-title">Редактировать продукт</h5>
+                        {% else %}
+                            <h5 class="card-title">Создать новый продукт</h5>
+                        {% endif %}
+                    </div>
+                    <div class="card-body">
+                        {% csrf_token %}
+                        {{ form.as_p }}
                         <button type="submit" class="btn btn-primary">
                             {% if object %}
                                 Сохранить
@@ -24,10 +22,24 @@
                                 Создать
                             {% endif %}
                         </button>
-                    </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title">Версия</h5>
+                    </div>
+                    <div class="card-body">
+                        {{ formset.management_form }}
+                        {% for form in formset.forms %}
+                        {{ form.as_p }}
+                        {% endfor %}
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    </form>
 </div>
 {% endblock %}
