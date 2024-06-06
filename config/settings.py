@@ -1,11 +1,14 @@
 import os
 from pathlib import Path
+from dotenv import load_dotenv
+
+load_dotenv()
 
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-SECRET_KEY = 'django-insecure-dw_l8mg&7uw$1cm#yveiguj+&0gbu(@0u+rkkt3t=0jf%9@@&i'
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 
 DEBUG = True
@@ -23,6 +26,7 @@ INSTALLED_APPS = [
 
     'catalog',
     'blog',
+    'users',
 ]
 
 MIDDLEWARE = [
@@ -59,9 +63,9 @@ WSGI_APPLICATION = 'config.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'Django_hw',
-        'USER': 'postgres',
-        'PASSWORD': '1479',
+        'NAME': os.getenv('DATABASE_NAME'),
+        'USER': os.getenv('USER_POSTGRES'),
+        'PASSWORD': os.getenv('USER_PASSWORD_POSTGRES'),
     }
 }
 
@@ -101,3 +105,17 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
 FIXTURES_ROOT = os.path.join(BASE_DIR, 'fixtures')
+
+AUTH_USER_MODEL = 'users.User'
+
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
+
+EMAIL_HOST = 'smtp.yandex.ru'
+EMAIL_PORT = 465
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+EMAIL_USE_SSL = True
+
+SERVER_EMAIL = EMAIL_HOST_USER
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
