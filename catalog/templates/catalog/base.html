@@ -188,9 +188,11 @@
         <div class="row py-lg-5">
             <div class="col-lg-6 col-md-8 mx-auto">
                 <h1 class="fw-light">Продукты</h1>
+                {% if user.is_authenticated %}
                 <p>
                     <a class="btn btn-primary" href="{% url 'catalog:product_create' %}" role="button">Создать продукт</a>
                 </p>
+                {% endif %}
             </div>
         </div>
     </section>

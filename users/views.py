@@ -1,3 +1,5 @@
+import secrets
+
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.views import LoginView
 from django.core.mail import send_mail
@@ -9,8 +11,6 @@ from users.forms import UserRegisterForm, UserProfileForm, UserLoginForm, UserPa
 from users.models import User
 
 from config.settings import EMAIL_HOST_USER
-
-import secrets
 
 
 class UserCreateView(CreateView):
@@ -40,3 +40,53 @@ def email_verification(request, token):
     user.is_active = True
     user.save()
     return redirect(reverse('users:login'))
+
+
+class UserLogin(LoginView):
+    form_class = UserLoginForm
+    template_name = 'users/login.html'
+
+
+class ProfileView(UpdateView):
+    model = User
+    form_class = UserProfileForm
+    success_url = reverse_lazy('users:profile')
+
+    def get_object(self, queryset=None):
+        return self.request.user
+
+
+class UserPasswordReset(TemplateView):
+
+    template_name = 'users/password_reset.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        form = UserPasswordResetForm()
+        context['form'] = form
+
+        return context
+
+    def post(self, request, **kwargs):
+        context = self.get_context_data(**kwargs)
+        email = request.POST.get('email')
+        context['email'] = email
+
+        password = secrets.token_urlsafe(8)
+        message = f'Здравствуйте! Ваш новый пароль: {password}'
+
+        user = User.objects.get(email=email)
+        user.password = make_password(password)
+        user.save()
+
+        send_mail(
+            subject="Восстановление пароля",
+            message=message,
+            from_email=EMAIL_HOST_USER,
+            recipient_list=[email]
+        )
+        return render(request, 'users/password_done.html', context)
+
+
+class UserPasswordDone(TemplateView):
+    template_name = 'users/password_done.html'

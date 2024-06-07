@@ -1,17 +1,26 @@
 {% extends 'users/base.html' %}
+{% load my_tags %}
 {% block content %}
 <div class="container">
-    <div class="row">
-        <div class="col-6">
-            <form class="row" method="post" enctype="multipart/form-data">
-                <div class="col">
-                    {% csrf_token %}
-                    {{ form.as_p }}
-                    <button type="submit" class="btn btn-primary">
-                        Войти
-                    </button>
+    <div class="row justify-content-center">
+        <div class="col-12">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h3 class="card-title text-center mb-4">Вход</h3>
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <div class="text-center mt-4">
+                            <button type="submit" class="btn btn-primary">
+                                Войти
+                            </button>
+                        </div>
+                    </form>
+                    <p class="text-center mt-3">
+                        <a href="{% url 'users:password_reset' %}" class="btn btn-link">Восстановить пароль</a>
+                    </p>
                 </div>
-            </form>
+            </div>
         </div>
     </div>
 </div>

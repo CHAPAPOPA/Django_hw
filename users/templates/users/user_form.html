@@ -7,11 +7,16 @@
                 <div class="col">
                     {% csrf_token %}
                     {{ form.as_p }}
-                    <button type="submit" class="btn btn-primary">
-                        Зарегистрироваться
-                    </button>
+                    {% if user.is_authenticated %}
+                    <button type="submit" class="btn btn-primary">Сохранить</button>
+                    {% else %}
+                    <button type="submit" class="btn btn-primary">Зарегистрировать</button>
+                    {% endif %}
                 </div>
             </form>
+            <p class="float-end mb-1">
+                <a href="/" class="btn btn-outline-dark btn-sm">Назад</a>
+            </p>
         </div>
     </div>
 </div>

@@ -1,14 +1,12 @@
 from django.forms import inlineformset_factory
 from django.http import HttpResponseRedirect
-
 import csv
-
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, TemplateView, CreateView, UpdateView, DeleteView
 from pytils.translit import slugify
-
 from catalog.forms import ProductForm, VersionForm
 from catalog.models import Product, Version
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 class HomePageView(TemplateView):
@@ -50,21 +48,20 @@ class ProductDetailView(DetailView):
         return self.object
 
 
-class ProductCreateView(CreateView):
+class ProductCreateView(LoginRequiredMixin, CreateView):
     model = Product
     form_class = ProductForm
     success_url = reverse_lazy('catalog:products')
 
     def form_valid(self, form):
-        if form.is_valid():
-            new_prod = form.save()
-            new_prod.slug = slugify(new_prod.name)
-            new_prod.save()
-
+        product = form.save()
+        user = self.request.user
+        product.user = user
+        product.save()
         return super().form_valid(form)
 
 
-class ProductUpdateView(UpdateView):
+class ProductUpdateView(LoginRequiredMixin, UpdateView):
     model = Product
     form_class = ProductForm
     success_url = reverse_lazy('catalog:products')

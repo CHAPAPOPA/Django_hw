@@ -1,5 +1,7 @@
 from django.db import models
 
+from users.models import User
+
 
 class Category(models.Model):
     name = models.CharField(max_length=50, verbose_name="наименование")
@@ -39,6 +41,8 @@ class Product(models.Model):
     )
     is_published = models.BooleanField(default=True, verbose_name="опубликован")
     slug = models.CharField(max_length=150, verbose_name="slug", null=True, blank=True)
+
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, blank=True, null=True, verbose_name='пользователь')
 
     def __str__(self):
         return f"{self.name} {self.category}"
