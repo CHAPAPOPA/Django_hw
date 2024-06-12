@@ -1,3 +1,4 @@
+from django.core.exceptions import PermissionDenied
 from django.forms import inlineformset_factory
 from django.http import HttpResponseRedirect
 import csv
@@ -11,7 +12,7 @@ from django.views.generic import (
     DeleteView,
 )
 from pytils.translit import slugify
-from catalog.forms import ProductForm, VersionForm
+from catalog.forms import ProductForm, VersionForm, ProductModeratorForm
 from catalog.models import Product, Version
 from django.contrib.auth.mixins import LoginRequiredMixin
 
@@ -100,6 +101,16 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
             return self.render_to_response(
                 self.get_context_data(form=form, formset=formset)
             )
+
+    def get_form_class(self):
+        user = self.request.user
+        if user == self.object.user:
+            return ProductForm
+        elif user.has_perm('catalog.set_published_status') and user.has_perm(
+                'catalog.can_change_description') and user.has_perm('catalog.can_change_category'):
+            return ProductModeratorForm
+        else:
+            raise PermissionDenied
 
 
 class ProductDeleteView(DeleteView):

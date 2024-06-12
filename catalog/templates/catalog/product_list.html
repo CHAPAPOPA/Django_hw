@@ -14,12 +14,16 @@
                             <div class="btn-group">
                                 <a href="{% url 'catalog:specific_product' product.pk %}" class="btn btn-info">Посмотреть</a>
                             </div>
+                            {% if perms.catalog.set_published_status and perms.catalog.can_change_description and perms.catalog.can_change_category or user == product.user %}
                             <div class="btn-group">
                                 <a href="{% url 'catalog:product_update' product.pk %}" class="btn btn-warning">Редактировать</a>
                             </div>
+                            {% endif %}
+                            {% if user == product.user %}
                             <div class="btn-group">
                                 <a href="{% url 'catalog:product_delete' product.pk %}" class="btn btn-danger">Удалить</a>
                             </div>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
