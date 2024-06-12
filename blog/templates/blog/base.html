@@ -219,9 +219,11 @@
             <div class="col-lg-6 col-md-8 mx-auto">
                 <h1 class="fw-light">Рассказы о своих питомцах</h1>
                 <p class="lead text-body-secondary">Порадуй мир историей своего питомца</p>
+                {% if user.is_authenticated %}
                 <p>
                     <a href="{% url 'blog:blog_create' %}" class="btn btn-primary my-2">Создать</a>
                 </p>
+                {% endif %}
             </div>
         </div>
     </section>
