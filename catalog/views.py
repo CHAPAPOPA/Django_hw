@@ -13,8 +13,10 @@ from django.views.generic import (
 )
 from pytils.translit import slugify
 from catalog.forms import ProductForm, VersionForm, ProductModeratorForm
-from catalog.models import Product, Version
+from catalog.models import Product, Version, Category
 from django.contrib.auth.mixins import LoginRequiredMixin
+
+from catalog.services import get_categories_from_cache
 
 
 class HomePageView(TemplateView):
@@ -35,6 +37,14 @@ class ContactInformationView(TemplateView):
             writer.writerow([name, phone, message])
 
         return HttpResponseRedirect(self.request.path)
+
+
+class CategoryListView(ListView):
+    model = Category
+    template_name = 'catalog/categories.html'
+
+    def get_queryset(self):
+        return get_categories_from_cache()
 
 
 class ProductListView(ListView):
